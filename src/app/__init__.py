@@ -1,4 +1,8 @@
-from utils import registrar_usuario, mostrar_usuarios, realizar_encuesta_emocional
+try:
+    from .utils import registrar_usuario, mostrar_usuarios, realizar_encuesta_emocional
+except Exception:
+    from utils import registrar_usuario, mostrar_usuarios, realizar_encuesta_emocional
+
 
 def main():
     while True:
