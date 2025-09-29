@@ -1,5 +1,3 @@
-# __init__.py
-
 from utils import registrar_usuario, mostrar_usuarios
 
 def main():
