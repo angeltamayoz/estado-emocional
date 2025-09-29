@@ -1,3 +1,28 @@
+from .models import EMOTIONAL_QUESTIONS, EmotionalSurvey
+import os
+# Realizar encuesta emocional por consola y guardar en CSV
+def realizar_encuesta_emocional():
+    print("=== Encuesta de Estado Emocional ===")
+    username = input("Ingresa tu nombre de usuario: ")
+    if username not in usuarios:
+        print("❌ Usuario no registrado. Regístrate primero.")
+        return
+    answers = []
+    for q in EMOTIONAL_QUESTIONS:
+        ans = input(q + " ")
+        answers.append(ans)
+    encuesta = EmotionalSurvey(username, answers)
+    # Guardar en encuestas.csv
+    fieldnames = ['username'] + [f"q{i+1}" for i in range(len(EMOTIONAL_QUESTIONS))]
+    answers_dict = {f"q{i+1}": v for i, v in enumerate(answers)}
+    row = {"username": username, **answers_dict}
+    file_path = 'encuestas.csv'
+    existing_data = []
+    if os.path.exists(file_path):
+        existing_data = read_csv(file_path)
+    existing_data.append(row)
+    write_csv(file_path, existing_data, fieldnames)
+    print("✅ Encuesta registrada exitosamente.\n")
 import csv
 from typing import List, Dict
 
