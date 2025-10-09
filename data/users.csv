@@ -1,0 +1,2 @@
+id,username,email,hashed_password,created_at
+1,Angel,angel@ejemplo.com,$pbkdf2-sha256$29000$l5KSsrbWuheiFEJISalV6g$ZOU9ryyNfGRr0MR6XYDeuj.C521Hk/peJlQlguoro6k,2025-10-09T10:49:22.016913
