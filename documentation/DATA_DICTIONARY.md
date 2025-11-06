@@ -46,5 +46,3 @@ Notas generales
 - Todos los datetime deben ser ISO-8601 para interoperabilidad.
 - En entorno de producción migrar estas tablas a una base de datos relacional y normalizar (users, surveys, alerts).
 - Las IDs en CSV se generan por lectura del último id y +1; esto no es seguro en concurrencia alta.
-
--- Fin del DATA_DICTIONARY.md --

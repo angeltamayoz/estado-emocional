@@ -122,5 +122,3 @@ Se agrega un mapeo explícito entre los entregables indicados en el enunciado y 
 2. Añadir 2–3 tests automatizados (pytest) para `app/models.py` y `app/analytics.py`.
 3. Ejecutar el servidor local, validar los endpoints y capturar la sesión de Swagger (`/docs`).
 4. Verificar dependencias en `requirements.txt` (añadir `email-validator` si fuera necesario para Pydantic/validaciones en su entorno).
-
-*** Fin del informe ***

@@ -61,5 +61,3 @@ Riesgos y mitigaciones
 Contacto y repositorio
 ----------------------
 Repositorio: https://github.com/angeltamayoz/estado-emocional
-
--- Fin del project_plan.md --
