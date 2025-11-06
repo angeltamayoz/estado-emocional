@@ -95,11 +95,32 @@ Long term:
 - Add observability (logs, metrics, traces) and deploy to a cloud environment.
 
 ## Archivos modificados por Copilot
-- `main.py`, `app/api.py`, `app/auth.py`, `app/models.py`, `app/analytics.py`, `app/schemas.py`, `README.md`, `EXAMPLES.md`, `CHANGELOG.md`.
 
-## Conclusión
-EmoTrack es un prototipo funcional, ideal para experimentación y pruebas en entornos locales. Las decisiones apuntan a minimizar fricción en desarrollo (CSV, pbkdf2), junto a endpoints de análisis que facilitan la creación de un dashboard.
+- `main.py`, `app/api.py`, `app/models.py`, `app/analytics.py`, `app/utils.py`, `README.md`, `EXAMPLES.md`, `CHANGELOG.md`, `project_plan.md`, `DATA_DICTIONARY.md`, `DELIVERY_CHECKLIST.md`, `CONTRIBUTING.md`.
 
-Cambio realizado por: GitHub Copilot
+## Entregas y artefactos para 2ª y 3ª entrega
+
+Se agrega un mapeo explícito entre los entregables indicados en el enunciado y los archivos presentes en el repositorio. Nota: la carpeta `EVIDENCE/` y un workflow de CI **no están incluidos** por defecto en esta copia del repositorio; se recomiendan crear dichos artefactos antes de la entrega.
+
+2ª Entrega — Fundamentos de Python y control de versiones
+- Documento de planeación: `project_plan.md` (presente en la raíz).
+- Estructura del repositorio: `README.md`, carpetas `app/`, `data/`, `Frontend/` (presentes). La carpeta `EVIDENCE/` no está incluida por defecto y debe crearse para recolectar evidencias de entrega.
+- Scripts en Python que simulan el registro y manejo de encuestas: endpoints y utilidades en `app/api.py`, `app/models.py`, `app/utils.py`.
+- Manejo de CSV: `data/users.csv` y `data/surveys.csv` (presentes en `data/`).
+- Evidencia de Git: crear capturas y enlaces dentro de una carpeta `EVIDENCE/` (no incluida en esta copia del repo).
+- Informe técnico con criterios de calidad: `TECHNICAL_REPORT.md` (este documento se actualizó para mapear entregables).
+
+3ª Entrega — Gestión y análisis de datos
+- Base de datos en CSV: `data/` (CSV de ejemplo incluidos).
+- Scripts para limpieza y EDA: `app/analytics.py` (funciones de summary, alerts, plots).
+- Visualizaciones: endpoints que generan PNGs (ver `app/api.py` y `app/analytics.py`) y frontend `Frontend/` que consume las rutas.
+- Dashboard básico: `Frontend/dashboard.html` y `Frontend/js/dashboard.js` consumen endpoints para mostrar métricas y gráficos.
+- Evidencia visual: cree `EVIDENCE/` y un subdirectorio `dashboard_screenshots/` para añadir PNGs del dashboard y gráficos (no incluido actualmente).
+
+## Siguientes recomendaciones para entrega final
+1. Crear y completar `EVIDENCE/` con capturas de pantalla del dashboard, logs de ejecución, y enlaces a commits y PRs.
+2. Añadir 2–3 tests automatizados (pytest) para `app/models.py` y `app/analytics.py`.
+3. Ejecutar el servidor local, validar los endpoints y capturar la sesión de Swagger (`/docs`).
+4. Verificar dependencias en `requirements.txt` (añadir `email-validator` si fuera necesario para Pydantic/validaciones en su entorno).
 
 *** Fin del informe ***

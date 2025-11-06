@@ -156,3 +156,36 @@ Ver `EXAMPLES.md` para ejemplos `curl` de registro, login, logout y creación de
 Soporte y contacto
 -------------------
 Este proyecto fue generado y mantenido con asistencia automatizada (GitHub Copilot). Para cambios en el diseño o migraciones sugeridas, abre un issue con los requerimientos y prioridad.
+
+Entregas y estado (nota de estado real)
+------------------------------------
+Este repositorio contiene la mayor parte de la documentación y el código del proyecto; sin embargo, algunos artefactos sugeridos en la documentación (p. ej. la carpeta `EVIDENCE/` o un workflow de CI en `.github/workflows/`) no están presentes por defecto en esta copia del repositorio.
+
+Estado y recomendaciones principales:
+
+2ª Entrega — Fundamentos de Python y control de versiones (estado):
+- Documento de planeación: `project_plan.md` (presente en la raíz).
+- Estructura del repositorio: `README.md`, `CONTRIBUTING.md`, `project_plan.md` y carpetas `app/`, `data/`, `Frontend/` (presentes).
+- Scripts que simulan registro y manejo de encuestas: implementados en `app/` (revisar `app/api.py` y `app/models.py`).
+- Manejo de CSV en `data/` (presente).
+- Evidencia de Git: actualmente NO hay carpeta `EVIDENCE/` en el repositorio; crea `EVIDENCE/` y añade capturas de commits/PRs antes de la entrega.
+- Informe técnico con criterios de calidad: `TECHNICAL_REPORT.md` (presente).
+
+3ª Entrega — Gestión y análisis de datos (estado):
+- Base de datos en CSV en `data/` (presente).
+- Scripts en Python para limpieza y transformación: funciones principales en `app/analytics.py` (parcial — añade scripts de ejemplo o notebooks si es necesario).
+- Análisis exploratorio y visualizaciones: endpoints en `app/api.py` y utilidades en `app/analytics.py` (parcial — verifica generación de PNGs en tu entorno local).
+- Dashboard básico: `Frontend/dashboard.html` y `Frontend/js/dashboard.js` (presentes; verifica cobertura de métricas).
+- Evidencia visual: create `EVIDENCE/dashboard_screenshots/` and add screenshots prior to delivery.
+
+Archivos sugeridos (si no existen, crear antes de la entrega):
+- `EVIDENCE/` — Carpeta para capturas, logs y evidencia de commits/PRs (no incluida por defecto).
+- `.github/workflows/ci.yml` — plantilla de CI para lint/tests (recomendada; no incluida por defecto).
+
+Pasos recomendados antes de entregar
+1. Crear la carpeta `EVIDENCE/` y añadir:
+	- Capturas del dashboard y `/docs` (Swagger).
+	- Un listado de commits/PRs (`git log --oneline` o capturas).
+2. Añadir al menos 2 tests automatizados (pytest) para `app/models.py` y `app/analytics.py`.
+3. Validar localmente la ejecución del servidor y la generación de gráficos (puede requerir instalación de dependencias extra; ver `CONTRIBUTING.md`).
+4. Actualizar `DELIVERY_CHECKLIST.md` con las evidencias recopiladas.
