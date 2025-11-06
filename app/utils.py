@@ -50,3 +50,28 @@ def decode_access_token(token: str):
         return payload
     except Exception as e:
         return None
+
+
+def get_user_from_token(authorization: str | None):
+    """Extract user metadata from an Authorization header or raw token.
+
+    Returns None if token missing/invalid, otherwise a dict with keys:
+    - user_id (int)
+    - username (str)
+    - role (str)
+    """
+    if not authorization:
+        return None
+    token = None
+    if isinstance(authorization, str) and authorization.startswith("Bearer "):
+        token = authorization.split(" ", 1)[1]
+    else:
+        token = authorization
+    payload = decode_access_token(token)
+    if not payload:
+        return None
+    try:
+        user_id = int(payload.get("user_id", 0))
+    except Exception:
+        user_id = 0
+    return {"user_id": user_id, "username": payload.get("username", "anonymous"), "role": payload.get('role','user')}

@@ -10,6 +10,14 @@ DATA_DIR = BASE / "data"
 SURVEYS_CSV = DATA_DIR / "surveys.csv"
 ALERTS_CSV = DATA_DIR / "alerts.csv"
 
+# plotting utilities
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import seaborn as sns
+import io
+sns.set_style('whitegrid')
+
 NEGATIVE_KEYWORDS = ["mal","triste","estres","depres","ansiedad","angusti","suicid","suicida","no puedo"]
 
 WEIGHTS = {"mood_score":0.40,"sleep_hours":0.25,"appetite":0.20,"concentration":0.15}
@@ -118,3 +126,92 @@ def get_recommendation_for_risk(risk_level):
             if r['risk_level'].strip().upper() == risk_level.strip().upper():
                 return r['recommendation']
     return ''
+
+
+def generate_user_plot(username: str, kind: str = 'evolution') -> bytes:
+    """Generate a PNG image (bytes) for a user's plot.
+
+    kind: 'evolution' | 'hist' | 'sleep' | 'summary'
+    """
+    if not SURVEYS_CSV.exists():
+        # Return a small image with a message
+        fig, ax = plt.subplots(figsize=(6,2))
+        ax.text(0.5,0.5,'No hay datos de encuestas', ha='center', va='center')
+        ax.axis('off')
+        buf = io.BytesIO()
+        plt.tight_layout()
+        fig.savefig(buf, format='png', dpi=120)
+        plt.close(fig)
+        buf.seek(0)
+        return buf.read()
+
+    df = pd.read_csv(SURVEYS_CSV, parse_dates=['created_at'])
+    df_user = df[df['username'] == username].copy()
+    if df_user.empty:
+        fig, ax = plt.subplots(figsize=(6,2))
+        ax.text(0.5,0.5,f'Sin datos para {username}', ha='center', va='center')
+        ax.axis('off')
+    else:
+        df_user['mood'] = pd.to_numeric(df_user['mood'], errors='coerce')
+        df_user['created_at'] = pd.to_datetime(df_user['created_at'])
+        df_user = df_user.set_index('created_at')
+
+        k = kind.lower() if kind else 'evolution'
+        if k == 'hist':
+            fig, ax = plt.subplots(figsize=(7,3))
+            sns.histplot(df_user['mood'], bins=10, kde=True, color='#2563eb', ax=ax)
+            ax.set_title(f'Distribución de ánimo — {username}')
+
+        elif k == 'sleep':
+            fig, axs = plt.subplots(1,2, figsize=(10,3))
+            if 'sleep_hours' in df_user and not df_user['sleep_hours'].dropna().empty:
+                sns.boxplot(x=df_user['sleep_hours'], color='#059669', ax=axs[0])
+                axs[0].set_title('Boxplot de sueño')
+                axs[0].set_xlabel('Horas')
+                sns.histplot(df_user['sleep_hours'].dropna(), bins=8, color='#059669', ax=axs[1])
+                axs[1].set_title('Histograma de sueño')
+                axs[1].set_xlabel('Horas')
+            else:
+                axs[0].text(0.5, 0.5, 'Sin datos de sueño', ha='center', va='center')
+                axs[0].axis('off')
+                axs[1].text(0.5, 0.5, 'Sin datos de sueño', ha='center', va='center')
+                axs[1].axis('off')
+            fig.suptitle(f'Análisis de sueño — {username}')
+
+        elif k == 'summary':
+            metrics = {
+                'Ánimo': df_user['mood'].mean(),
+                'Sueño': df_user['sleep_hours'].mean() if 'sleep_hours' in df_user else None,
+                'Apetito': df_user['appetite'].mean() if 'appetite' in df_user else None,
+                'Concentración': df_user['concentration'].mean() if 'concentration' in df_user else None
+            }
+            labels = [kk for kk,vv in metrics.items() if vv is not None]
+            values = [vv for vv in metrics.values() if vv is not None]
+            colors = ['#2563eb','#059669','#10b981','#f59e0b'][:len(values)]
+            fig, ax = plt.subplots(figsize=(8,3))
+            if values:
+                ax.bar(labels, values, color=colors)
+                ax.set_ylim(0, 10)
+                ax.set_title(f'Resumen de métricas — {username}')
+                for i, v in enumerate(values):
+                    y = min(v + 0.2, 9.8)
+                    ax.text(i, y, f'{v:.1f}', ha='center', va='bottom', fontsize=9)
+            else:
+                ax.text(0.5, 0.5, 'No hay métricas disponibles', ha='center', va='center')
+                ax.axis('off')
+
+        else:
+            daily = df_user['mood'].resample('D').mean()
+            fig, ax = plt.subplots(figsize=(8,3))
+            ax.plot(daily.index, daily.values, marker='o', color='#2563eb', label='Ánimo diario')
+            if len(daily) >= 3:
+                rolling = daily.rolling(window=3, min_periods=1).mean()
+                ax.plot(rolling.index, rolling.values, linestyle='--', color='#f59e0b', label='Media móvil (3d)')
+            ax.set_title(f'Evolución de ánimo — {username}')
+
+    buf = io.BytesIO()
+    plt.tight_layout()
+    fig.savefig(buf, format='png', dpi=120)
+    plt.close(fig)
+    buf.seek(0)
+    return buf.read()

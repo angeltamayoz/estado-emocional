@@ -1,1 +1,5 @@
 user_id,username,avg_score,trend_negative,risk_level
+1,Angel,65.91333333333334,False,MODERADO
+2,Johan,68.56,False,MODERADO
+3,Juan_Pablo,99.06,False,BAJO
+4,Prueba,96.25,False,BAJO

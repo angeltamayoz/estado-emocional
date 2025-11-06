@@ -1,1 +1,10 @@
 id,user_id,username,mood,mood_score,sleep_hours,appetite,concentration,notes,created_at
+1,1,Angel,6,60,7.5,7,7,Happy,2025-11-05T19:06:09
+2,1,Angel,5,50,7.0,5,5,,2025-11-05T19:19:26
+3,1,Angel,5,50,7.0,5,7,,2025-11-05T19:19:32
+4,2,Johan,8,80,7.0,7,9,Muy feliz,2025-11-05T22:11:49
+5,2,Johan,8,80,15.5,6,7,Happy,2025-11-05T22:15:00
+6,3,Juan_Pablo,10,100,7.5,10,10,Very good,2025-11-05T22:16:27
+7,3,Juan_Pablo,10,100,7.0,10,10,Super bien,2025-11-05T22:24:35
+8,4,Prueba,10,100,7.5,10,10,,2025-11-05T22:29:03
+9,4,Prueba,10,100,9.5,10,10,,2025-11-05T22:29:56

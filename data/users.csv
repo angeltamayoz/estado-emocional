@@ -1,1 +1,4 @@
 id,username,email,hashed_password,role,created_at
+1,Angel,a@gmail.com,123456,user,2025-11-05T19:05:35
+2,Johan,j@gmail.com,123456,user,2025-11-05T22:11:26
+3,Juan_Pablo,jp@gmail.com,123456,user,2025-11-05T22:15:45
